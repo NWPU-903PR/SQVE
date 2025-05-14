@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
-from models.VAE import VAE
+from models.synthtic_VAE import synthtic_VAE
 from utils import LoadData
 import numpy as np
 from sklearn.metrics import *
@@ -41,7 +41,7 @@ def RBO_score(l1, l2, p=0.1):
     rbo_ext = (1 - p) / p * (sum1 + sum2) + sum3
     return rbo_ext
 
-    def calculate_CBR(dataloader, model):
+def calculate_CBR(dataloader, model):
         model.eval()
         correct = 0
         total = 0
@@ -54,16 +54,6 @@ def RBO_score(l1, l2, p=0.1):
         CBR_score = correct / total
         return CBR_score
 
-if __name__ == "__main__":
-    ##RBO
-    data = pd.read_csv('RBO_dataset10_qt.csv')
-    list_Ground = data.iloc[:, 0].tolist()
-    list = data.iloc[:, 1].tolist()
-    print(RBO_score(list_Ground, list))
-
-    ##CBR
-    CBR_score = calculate_CBR(dataloader, model)
-    print(f'CBR on SNP data: {CBR_score * 100:.2f}%')
 
 
 
